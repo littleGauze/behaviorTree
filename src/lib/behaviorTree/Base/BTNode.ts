@@ -8,10 +8,12 @@ export default abstract class BTNode {
       this.start()
     }
 
-    const s = this.update()
-    if (s !== State.Running) {
+    const state = this.update()
+    if (state !== State.Running) {
       this.end()
     }
+
+    return state
   }
 
   start() {

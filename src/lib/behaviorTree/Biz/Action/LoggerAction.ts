@@ -1,7 +1,7 @@
 import BTAction from "../../Base/BTAction"
 import { State } from "../../Base/constants"
 
-export class LoggerAction extends BTAction {
+export default class LoggerAction extends BTAction {
   constructor(private text: string) {
     super()
   }
