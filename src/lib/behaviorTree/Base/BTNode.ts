@@ -3,12 +3,12 @@ import { State } from "./constants"
 export default abstract class BTNode {
   protected state: State = State.Ready
 
-  run() {
+  run(dt?: number) {
     if (this.state === State.Ready) {
       this.start()
     }
 
-    const state = this.update()
+    const state = this.update(dt)
     if (state !== State.Running) {
       this.end()
     }
@@ -20,7 +20,7 @@ export default abstract class BTNode {
     this.state = State.Running
   }
 
-  update(): State {
+  update(dt?: number): State {
     return State.Succeed
   }
 

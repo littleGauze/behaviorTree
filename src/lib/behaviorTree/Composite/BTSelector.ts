@@ -7,20 +7,20 @@ export default class BTSelector extends BTParent {
     this.index = 0
   }
 
-  update(): State {
+  update(dt?: number): State {
     if (this.state === State.Succeed) return State.Succeed
     if (this.index < this.children.length) {
       const cur = this.children[this.index]
-      const state = cur.run()
-      if (state === State.Succeed) {
-        this.state = State.Succeed
-        return State.Succeed
+      const state = cur.run(dt)
+      switch (state) {
+        case State.Succeed:
+          this.state = State.Succeed
+          return State.Succeed
+        case State.Failed:
+          this.index++
       }
-      this.index++
-    } else {
-      this.end()
-      return State.Failed
+      return State.Running
     }
-    return State.Running
+    return State.Failed
   }
 }
