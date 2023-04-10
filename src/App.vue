@@ -1,12 +1,23 @@
 <template>
-  <div class="stage w-full h-full">
+  <div
+    ref="stage"
+    class="stage w-screen h-screen"
+  >
     <div
       ref="el"
       class="absolute w-32 h-32 border flex items-center justify-center"
     >Hello World</div>
     <div>x: {{ x }}</div>
     <div>y: {{ y }}</div>
-    <Snake />
+    <template
+      v-for="i in snakeCount"
+      :key="i"
+    >
+      <Snake
+        :id="i + ''"
+        ref="snakes"
+      />
+    </template>
   </div>
 </template>
 
@@ -15,22 +26,25 @@ import { onMounted, ref, watchEffect } from 'vue'
 import { useMouse } from './hooks/useMouse'
 import { useTimer } from './hooks/useTimer'
 import MyTree from './lib/behaviorTree/Tree/MyTree'
-import TWEEN from '@tweenjs/tween.js'
+import TWEEN, { Tween } from '@tweenjs/tween.js'
 import BlackBoard from './lib/behaviorTree/Biz/Blackboard'
 import Snake from './components/Snake.vue'
+import GameObject, { Position } from './common/GameObject'
+import { randomPos } from './common/Utils'
 
 const { x, y } = useMouse()
 const timer = useTimer()
 const el = ref<HTMLElement>()
+const stage = ref<HTMLDivElement>()
+const snakes = ref<InstanceType<typeof Snake>[]>([])
+
+BlackBoard.instance.stage = stage
+BlackBoard.instance.snakes = snakes
 
 interface Pos {
   x: number
   y: number
 }
-
-timer.tick((dt: number) => {
-  TWEEN.update()
-})
 
 let last: Pos = { x: 0, y: 0 }
 watchEffect(() => {
@@ -54,10 +68,18 @@ function moveTo(pos: Pos, el?: HTMLElement) {
     }).start()
 }
 
-const myTree = new MyTree()
-
-timer.tick((dt: number) => {
-  myTree.root?.run(dt)
+onMounted(() => {
+  initGame()
 })
+
+const snakeCount = 500
+function initGame() {
+  timer.tick((dt: number) => {
+    TWEEN.update()
+    for (const snake of snakes.value) {
+      snake.render(dt)
+    }
+  })
+}
 
 </script>

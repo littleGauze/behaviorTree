@@ -1,8 +1,8 @@
 export class Position {
-  constructor(private x: number = 0, private y: number = 0) { }
+  constructor(public x: number = 0, public y: number = 0) { }
 
   distance(pos: Position): number {
-    return Math.sqrt((pos.x - this.x) ** 2 + (pos.y - this.y))
+    return Math.abs(Math.sqrt((pos.x - this.x) ** 2 + (pos.y - this.y)))
   }
 }
 
