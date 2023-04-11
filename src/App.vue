@@ -72,7 +72,7 @@ onMounted(() => {
   initGame()
 })
 
-const snakeCount = 500
+const snakeCount = 100
 function initGame() {
   timer.tick((dt: number) => {
     TWEEN.update()

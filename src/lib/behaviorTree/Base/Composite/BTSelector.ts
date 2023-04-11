@@ -1,5 +1,5 @@
-import BTParent from "../Base/BTParent"
-import { State } from "../Base/constants"
+import BTParent from "../BTParent"
+import { State } from "../constants"
 
 export default class BTSelector extends BTParent {
   start() {

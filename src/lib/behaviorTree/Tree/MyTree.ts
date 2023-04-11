@@ -1,5 +1,5 @@
-import BTSelector from "../Composite/BTSelector"
-import BTSequence from "../Composite/BTSequence"
+import BTSelector from "../Base/Composite/BTSelector"
+import BTSequence from "../Base/Composite/BTSequence"
 import BTTree from "../Base/BTTree"
 import LoggerAction from "../Biz/Action/LoggerAction"
 import ReverseDecorator from "../Biz/Condition/ReverseDecorator"
@@ -8,8 +8,8 @@ import MagicAttackAction from "../Biz/Action/MagicAttackAction"
 import WaittingAction from "../Biz/Action/WaittingAction"
 import IsDeadCondition from "../Biz/Condition/IsDeadCondition"
 import AttackAction from "../Biz/Action/AttackAction"
-import BTCondition from "../Composite/BTCondition"
-import BTRepeat from "../Composite/BTRepeat"
+import BTCondition from "../Base/Composite/BTCondition"
+import BTRepeat from "../Base/Composite/BTRepeat"
 
 export default class MyTree extends BTTree {
   constructor() {

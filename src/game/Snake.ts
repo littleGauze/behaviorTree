@@ -1,14 +1,12 @@
 import { Ref, watch } from "vue"
 import GameObject, { Position } from "../common/GameObject"
 import BTTree from "../lib/behaviorTree/Base/BTTree"
-import MyTree from "../lib/behaviorTree/Tree/MyTree"
 import SnakeBTTree from "../lib/behaviorTree/Tree/SnakeBTTree"
-import { randomPos } from "../common/Utils"
 import BlackBoard from "../lib/behaviorTree/Biz/Blackboard"
 
 export default class Snake extends GameObject {
   private behavior?: BTTree
-  constructor(public id: string, private el: Ref<HTMLDivElement | undefined>) {
+  constructor(public id: string, private el: Ref<HTMLDivElement | undefined>, public mouse: { x: Ref<number>, y: Ref<number> }) {
     super()
     this.init()
   }
@@ -33,6 +31,14 @@ export default class Snake extends GameObject {
 
   moveTo(pos: Position) {
     this.pos = pos
+  }
+
+  followMouse() {
+    const pos = new Position(this.mouse.x.value, this.mouse.y.value)
+    if (this.pos.distance(pos) < 300) {
+      return pos
+    }
+    return false
   }
 
   canMove() {

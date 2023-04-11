@@ -12,14 +12,16 @@ import Snake from '../game/Snake'
 import { Position } from '../common/GameObject'
 import { computed } from '@vue/reactivity'
 import BlackBoard from '../lib/behaviorTree/Biz/Blackboard'
+import { useMouse } from '../hooks/useMouse'
 
 const snake = ref<HTMLDivElement>()
+const mouse = useMouse()
 
 const props = defineProps<{
   id: string
 }>()
 
-const s = new Snake(props.id, snake)
+const s = new Snake(props.id, snake, mouse)
 
 defineExpose({
   s,

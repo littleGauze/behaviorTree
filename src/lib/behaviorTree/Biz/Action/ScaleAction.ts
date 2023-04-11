@@ -14,14 +14,15 @@ export default class ScaleAction extends BTAction {
 
   start() {
     super.start()
+    const scale = .5 + Math.random() * 2
     const scaleUp = new TWEEN.Tween({ s: 1 })
-      .to({ s: 2 }, 1000)
+      .to({ s: scale }, 1000)
       .easing(TWEEN.Easing.Bounce.Out)
       .onUpdate(({ s }) => {
         this.node.scaleTo(s)
       })
 
-    const scaleDown = new TWEEN.Tween({ s: 2 })
+    const scaleDown = new TWEEN.Tween({ s: scale })
       .to({ s: 1 }, 1000)
       .easing(TWEEN.Easing.Bounce.Out)
       .onUpdate(({ s }) => {

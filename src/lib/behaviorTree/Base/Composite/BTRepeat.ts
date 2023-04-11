@@ -1,5 +1,5 @@
-import BTNode from "../Base/BTNode"
-import { State } from "../Base/constants"
+import BTNode from "../BTNode"
+import { State } from "../constants"
 import BTDecorator from "./BTDecorator"
 
 export default class BTRepeat extends BTDecorator {

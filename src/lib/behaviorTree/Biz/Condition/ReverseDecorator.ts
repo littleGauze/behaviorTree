@@ -1,5 +1,5 @@
 import { State } from "../../Base/constants"
-import BTDecorator from "../../Composite/BTDecorator"
+import BTDecorator from "../../Base/Composite/BTDecorator"
 
 export default class ReverseDecorator extends BTDecorator {
   update(): State {

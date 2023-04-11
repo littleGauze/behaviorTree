@@ -8,6 +8,9 @@ export default class BlackBoard extends Singleton {
     return this.getInstance<BlackBoard>()
   }
 
+  mp: number = 100
+  hp: number = 100
+
   stage?: Ref<HTMLDivElement | undefined>
   snakes?: Ref<InstanceType<typeof Snake>[]>
 
