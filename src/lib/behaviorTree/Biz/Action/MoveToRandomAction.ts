@@ -4,19 +4,16 @@ import TWEEN, { Tween } from '@tweenjs/tween.js'
 import BlackBoard from "../Blackboard"
 import { State } from "../../Base/constants"
 import Snake from "../../../../game/Snake"
+import SnakeBlackBoard from "../../Tree/SnakeBlackBoard"
 
 export default class MoveToRandomAction extends BTAction {
-  constructor(private node: Snake) {
+  constructor(private bb: SnakeBlackBoard) {
     super()
   }
 
-  private timer: number = 0
   private pos: Position[] = []
 
-  private tween?: Tween<Position>
-
-  start() {
-    super.start()
+  override init() {
     this.pos = [
       BlackBoard.instance.randomPos(),
       BlackBoard.instance.randomPos(),
@@ -27,12 +24,12 @@ export default class MoveToRandomAction extends BTAction {
       o.y.push(p.y)
       return o
     }, { x: [] as number[], y: [] as number[] })
-    this.tween = new TWEEN.Tween(this.node.pos)
+    new TWEEN.Tween(this.bb.node.pos)
       .to(target, 2000)
       .easing(TWEEN.Easing.Exponential.InOut)
       .interpolation(TWEEN.Interpolation.Bezier)
       .onUpdate(({ x, y }) => {
-        this.node.moveTo(new Position(x, y))
+        this.bb.node.moveTo(new Position(x, y))
       })
       .onComplete(() => {
         this.state = State.Succeed
@@ -41,7 +38,6 @@ export default class MoveToRandomAction extends BTAction {
   }
 
   update(dt?: number) {
-    this.timer += dt || 0
     return this.state
   }
 }

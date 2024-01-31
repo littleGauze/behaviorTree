@@ -5,7 +5,7 @@ import SnakeBTTree from "../lib/behaviorTree/Tree/SnakeBTTree"
 import BlackBoard from "../lib/behaviorTree/Biz/Blackboard"
 
 export default class Snake extends GameObject {
-  private behavior?: BTTree
+  private behavior?: SnakeBTTree
   constructor(public id: string, private el: Ref<HTMLDivElement | undefined>, public mouse: { x: Ref<number>, y: Ref<number> }) {
     super()
     this.init()
@@ -63,7 +63,7 @@ export default class Snake extends GameObject {
       this.el.value.style.left = this.pos.x - 32 + 'px'
     }
     if (this.behavior) {
-      this.behavior.root?.run(dt)
+      this.behavior.run(dt)
     }
   }
 }

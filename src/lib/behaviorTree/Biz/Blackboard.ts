@@ -1,5 +1,5 @@
 import { Ref } from "vue"
-import Singleton from "../../../common/Singleton"
+import Singleton from "../Base/Singleton"
 import { randomPos } from "../../../common/Utils"
 import Snake from "../../../components/Snake.vue"
 

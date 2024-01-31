@@ -3,6 +3,8 @@ import { State } from "./constants"
 export default abstract class BTNode {
   protected state: State = State.Ready
 
+  init() {}
+
   run(dt?: number) {
     if (this.state === State.Ready) {
       this.start()
@@ -18,6 +20,7 @@ export default abstract class BTNode {
 
   start() {
     this.state = State.Running
+    this.init()
   }
 
   update(dt?: number): State {

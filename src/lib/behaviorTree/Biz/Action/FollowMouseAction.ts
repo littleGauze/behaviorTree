@@ -4,41 +4,29 @@ import TWEEN, { Tween } from '@tweenjs/tween.js'
 import BlackBoard from "../Blackboard"
 import { State } from "../../Base/constants"
 import Snake from "../../../../game/Snake"
+import SnakeBlackBoard from "../../Tree/SnakeBlackBoard"
 
 export default class FollowMouseAction extends BTAction {
-  constructor(private node: Snake) {
+  constructor(private bb: SnakeBlackBoard) {
     super()
   }
 
-  private timer: number = 0
-  private pos?: Position
-  private tween?: Tween<any>
-
-  start() {
-    super.start()
-    if (this.pos && this.pos.distance(this.node.pos) > 0) {
-      this.tween = new TWEEN.Tween(this.node.pos)
-        .to(this.pos)
-        .easing(TWEEN.Easing.Exponential.Out)
-        .onUpdate(({ x, y }) => {
-          this.node.moveTo(new Position(x, y))
-        })
-        .onComplete(() => {
-          this.state = State.Succeed
-          this.pos = undefined
-        })
-        .start()
-    }
-  }
+  private tw: Tween<Position> | null = null
 
   update(dt?: number) {
-    let pos
-    if (pos = this.node.followMouse()) {
-      this.pos = pos as Position
-      this.start()
-    } else {
-      // this.state = State.Running
+    let pos = this.bb.node.followMouse()
+    if (pos) {
+      if (!pos.equals(this.bb.node.pos) && !this.tw?.isPlaying()) {
+        this.tw = new TWEEN.Tween(this.bb.node.pos)
+          .to(pos)
+          .easing(TWEEN.Easing.Exponential.Out)
+          .onUpdate(({ x, y }) => {
+            this.bb.node.moveTo(new Position(x, y))
+          })
+          .start()
+      }
+      return State.Running
     }
-    return this.state
+    return State.Succeed
   }
 }
